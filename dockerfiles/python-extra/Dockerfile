@@ -93,11 +93,6 @@ RUN set -ex \
     && yum install -y --setopt=tsflags=nodocs wgrib2 \
     && yum clean all \
     && rm -rf /var/cache/yum \
-    && wget -q -O phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 \
-    && mkdir phantomjs \
-    && tar -xjC ./phantomjs --strip-components=1 -f phantomjs.tar.bz2 \
-    && cp phantomjs/bin/phantomjs /opt/app-root/bin/. \
-    && rm -r phantomjs phantomjs.tar.bz2 \
     && chown -R 1001:0 ${APP_ROOT} \
     && fix-permissions ${APP_ROOT} -P \
     && mkdir /data \
