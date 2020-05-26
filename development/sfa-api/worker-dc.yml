@@ -22,10 +22,24 @@ spec:
         app: sfa-api
         deploymentconfig: api-worker
     spec:
+      initContainers:
+      - name: make-ca
+        command:
+          - sh
+          - -c
+          - "cp /etc/ssl/certs/ca-certificates.crt /ca/. && cat /run/secrets/kubernetes.io/serviceaccount/service-ca.crt >> /ca/ca-certificates.crt"
+        image: sfa-api:{{ sfa_api_image_tag | default('latest') }}
+        volumeMounts:
+        - mountPath: /ca
+          name: combined-ca
       containers:
       - command:
           - /opt/app-root/bin/sfa-api
           - worker
+          - --job-monitoring-interval
+          - "660"
+          - --worker-ttl
+          - "720"
           - /redis/redis-config.py
         env:
         - name: SENTRY_DSN
@@ -33,16 +47,17 @@ spec:
         # important for orca config
         - name: HOME
           value: /opt/app-root/
+        - name: REQUESTS_CA_BUNDLE
+          value: /ca/ca-certificates.crt
         image: sfa-api:{{ sfa_api_image_tag | default('latest') }}
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         name: rqworker
-        ports:
-        - containerPort: 8080
-          protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
+        - mountPath: /ca
+          name: combined-ca
         - mountPath: /redis
           name: redis-config
         - mountPath: /opt/app-root/.plotly
@@ -51,7 +66,7 @@ spec:
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
-      terminationGracePeriodSeconds: 120
+      terminationGracePeriodSeconds: 30
       volumes:
       - name: redis-config
         secret:
@@ -60,12 +75,15 @@ spec:
       - name: orca-config
         configMap:
           name: orca-config
+      - name: combined-ca
+        emptyDir: {}
   test: false
   triggers:
   - imageChangeParams:
       automatic: true
       containerNames:
       - rqworker
+      - make-ca
       from:
         kind: ImageStreamTag
         name: sfa-api:{{ sfa_api_image_tag | default('latest') }}
