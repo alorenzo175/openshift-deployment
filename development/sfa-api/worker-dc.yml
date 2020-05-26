@@ -43,7 +43,7 @@ spec:
           - /redis/redis-config.py
         env:
         - name: SENTRY_DSN
-          value: {{ sentry_dsn }}
+          value: {{ worker_sentry_dsn }}
         # important for orca config
         - name: HOME
           value: /opt/app-root/

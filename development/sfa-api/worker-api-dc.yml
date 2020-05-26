@@ -46,7 +46,7 @@ spec:
         - name: REDIS_SETTINGS
           value: '/redis/redis-config.py'
         - name: SENTRY_DSN
-          value: {{ sentry_dsn }}
+          value: {{ worker_sentry_dsn }}
         - name: TIMEOUT
           value: "300"
         - name: MAX_CONTENT_LENGTH

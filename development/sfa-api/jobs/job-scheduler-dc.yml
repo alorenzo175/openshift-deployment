@@ -29,7 +29,7 @@ spec:
           - /conf/job-config.py
         env:
         - name: SENTRY_DSN
-          value: {{ sentry_dsn }}
+          value: {{ worker_sentry_dsn }}
         image: sfa-api:{{ sfa_api_image_tag | default('latest') }}
         imagePullPolicy: Always
         name: jobscheduler

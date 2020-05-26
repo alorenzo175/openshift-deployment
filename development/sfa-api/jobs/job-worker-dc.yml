@@ -43,7 +43,7 @@ spec:
           - /conf/job-config.py
         env:
         - name: SENTRY_DSN
-          value: {{ sentry_dsn }}
+          value: {{ worker_sentry_dsn }}
         - name: HOME
           value: /opt/app-root/
         - name: REQUESTS_CA_BUNDLE
