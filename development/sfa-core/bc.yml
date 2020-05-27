@@ -26,6 +26,7 @@ spec:
           cd /tmp/src && \
           pip install -r requirements.txt -r requirements-test.txt && \
           pip install ".[all]" && \
+          tlmgr --usermode install $(cat packages.tex) --repository=http://mirrors.ibiblio.org/pub/mirrors/CTAN/systems/texlive/tlnet && \
           rm -r /tmp/src
   strategy:
     dockerStrategy:
