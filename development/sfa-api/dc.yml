@@ -48,7 +48,7 @@ spec:
         - name: SENTRY_DSN
           value: {{ sentry_dsn }}
         - name: JOB_BASE_URL
-          value: {{ 'https://sfa-worker-api.' + namespace + '.svc:8080' }}
+          value: {{ 'https://sfa-worker-api.' + namespace + '.svc' }}
         envFrom:
           - secretRef:
               name: sfa-api-mysql-config
