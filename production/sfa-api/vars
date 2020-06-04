@@ -10,6 +10,7 @@ mysql_database: &mysqldb arbiter_data
 auth0_client_id: &clientid !ssm /okd/production/sfa-api/auth0_client_id
 auth0_client_secret: &clientsecret !ssm /okd/production/sfa-api/auth0_client_secret
 sentry_dsn: !ssm /okd/sentry/apidsn
+worker_sentry_dsn: !ssm /okd/sentry/workerapidsn
 redis_auth: &redispw !ssm /okd/production/sfa-api/redis_auth
 redis_host: &redishost api-redis.production.svc
 redis_config: |
