@@ -25,7 +25,6 @@ data:
     cert = /stunnel/cert/tls.crt
     key = /stunnel/cert/tls.key
     CAfile = /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
-    sslMinVersion = TLSv1.2
     verify = 1
     
     pid = /stunnel/stunnel.pid
