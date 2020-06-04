@@ -8,14 +8,13 @@ metadata:
   name: orca
   namespace: {{ namespace }}
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 3
   selector:
     deploymentconfig: orca
   strategy:
-    activeDeadlineSeconds: 21600
     resources: {}
-    type: Recreate
+    type: Rolling
   template:
     metadata:
       labels:
@@ -23,10 +22,17 @@ spec:
         deploymentconfig: orca
     spec:
       containers:
-      - image: quay.io/plotly/image-exporter:v1.3.0
+      - image: quay.io/plotly/image-exporter:v1.3.1
         imagePullPolicy: Always
         name: orca
-        args: ["--plotlyJS", "https://plot.ly/static/plotlyjs/build/plotlyjs-bundle.js", "--port", "9091"]
+        args:
+          - "--plotlyJS"
+          - "https://plot.ly/static/plotlyjs/build/plotlyjs-bundle.js"
+          - "--port"
+          - "9091"
+          - "--graph-only"
+          - "--window-max-number"
+          - "100"
         env:
           - name: PLOTLY_IMAGESERVER_ENABLE_MONIT
             value: "false"
