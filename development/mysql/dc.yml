@@ -84,7 +84,7 @@ spec:
             secretKeyRef:
               key: reference-refresh-token
               name: mysql
-        image: percona:8.0.13-4-centos
+        image: percona:8.0.19-10-centos
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
