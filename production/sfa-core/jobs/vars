@@ -10,3 +10,4 @@ sandia_api_key: !ssm sandia-api-key
 arm_api_key: !ssm arm_api_key
 arm_api_user: !ssm arm_api_username
 eia_api_key: !ssm eia-api-key
+pvdaq_api_key: !ssm pvdaq-api-key

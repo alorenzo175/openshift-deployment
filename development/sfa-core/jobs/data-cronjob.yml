@@ -50,6 +50,13 @@ spec:
                       key: eia-api-key
                       name: reference-data
                 {% endif %}
+                {% if network == 'nrel pvdaq' %}
+                - name: NREL_PVDAQ_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      key: pvdaq-api-key
+                      name: reference-data
+                {% endif %}
                 - name: SFA_API_USER
                   valueFrom:
                     secretKeyRef:
